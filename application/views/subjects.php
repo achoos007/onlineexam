@@ -1,4 +1,6 @@
 <?php 
+
+// print " hai ";
 			$count = 0;
 			$query = $this->db->query("SELECT n_subjectid,c_subject,addedby,status,d_date FROM tbl_subject order by c_subject");
 			 
