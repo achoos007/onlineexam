@@ -1,6 +1,5 @@
 <?php
 $list['table'] = 'qdesigner';
-//$list['start'] = $start;
 $list['order']['title'] = 'desc';
 $list = getrecords($list);
 ?>
@@ -33,6 +32,7 @@ $list = getrecords($list);
                             <td>  
 
                                 <?php
+                                 if ($o['status'] == 1)
                                 print dialog("exam/assign/" . $o['qDesignerId'], 'Assign');
                                 ?>
 
