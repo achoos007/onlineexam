@@ -52,8 +52,6 @@ ajaxform("subjectform".$row->n_subjectid,"editform");
 			<td width="100px">
 			
     	<?php 
-        print"Hello";
-        print"Hi";
     	
     	print dialog("subjects/form/".$row->n_subjectid, 'Edit');
     	?>  

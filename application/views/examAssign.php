@@ -1,3 +1,4 @@
+ <div id="assigneelist">
 <?php
 
 /*
@@ -7,25 +8,30 @@
 print title($title);
 
 ?>
+
 <div class="data-box">
-    <form method="post" action="<?php print site_url('exam/test');?>" id="examassign"> 
+    <?php
+    ?>
+    <form method="post" action="<?php print site_url('exam/assigneelist');?>" id="examassign"> 
 <div data-role="fieldcontain" >
    Choose Assignee
-   <select name="select-choice-1" id="assignee" data-mini="true">
+   <select name="assigneeid" id="assignee" data-mini="true">
       <option value="select">Select</option>
       <option value="1">Employees</option>
       <option value="2">Candidates</option>
    </select>
 </div>
-    <div id="assigneelist"></div>   
+       
+       
+        <input type="hidden" value='<?php print $qid; ?>' name="qdesignerid"/> 
 <?php
 //print "<input type='button' value='Load More' data-theme='b' name='loadmoreopen' id='loadmoreopen' data-mini='true'/>";
-print submit('Save');
+print submit('Continue');
 print close();
 ?>
     </form>
 </div>
-
+   </div>  
 <?php
 $script="
     
@@ -35,7 +41,7 @@ $script="
     //alert(value);
     $.post('".site_url('exam/assigneelist/')."',{clkid:value},function(data){
     //alert(data);
-    $('#assigneelist').html(data);
+    //$('#assigneelist').html(data);
     });
 
     })
