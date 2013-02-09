@@ -128,17 +128,20 @@ class Exam extends CI_Controller {
     }
 
     function delete() {
+
         $qdid = intval($this->input->post('clkid'));
         $del['table'] = 'qdesigner';
         $del['where']['qDesignerId'] = $qdid;
         delete($del);
     }
+
     function module() {
         $pid = intval($this->input->post('clkid'));
             $query = $this->db->query("select moduleid,name from module where productid='$pid'");
         if ($query->num_rows() > 0) {
             print "<option value='select'>Select</option>";
             foreach ($query->result() as $row) {
+
                 $moduleid = $row->moduleid;
                 $modulename = $row->name;
                 print "<option value='" . $moduleid . "'>" . $modulename . " </option>";
@@ -159,44 +162,36 @@ class Exam extends CI_Controller {
         }
     }
     
-    function assign(){
+    function assign($qid=0){
         
         $this->menu = "exam";
         $this->title = "Designer";
         
-        $data['title']=$data['btnText']." - Assign ";  
-        
+        $data['title']=" Assign ";  
+        $data['qid'] = intval($qid);
         $this->load->view("theme/header",$data);
         $this->load->view("examAssign",$data);
         $this->load->view("theme/footer",$data);
     }
     
     function assigneelist(){
-        $assignid=intval($this->input->post('clkid'));
-        if($assignid == '1')
-        {
-        $query = $this->db->query("select first_name,last_name from tbl_staffs where status='Active' group by first_name asc");
-        
-
-        if($query->num_rows()>0)
-        {
-            
-            foreach ($query->result() as $row)   
-            {
-                print"<table><tr>
-                <td><input type='checkbox' name='assigneelist' ></td>";
-                print"<td>$row->first_name  $row->last_name</td></tr></table>";
-            }
-         
-        }
-        }
-         else {
-             print"No record found";
-         }
-    }
-    function test(){
         
         //print_r($_POST);
+         $this->menu = "exam";
+        $this->title = "Designer";
+        
+        $data['title']=" List View ";  
+        $data['qid'] = intval($this->input->post('qdesignerid'));
+        $data['assigneeid']=intval($this->input->post('assigneeid'));
+        $data['main']['open_question_list']['right']['text'] = "Previous Question Papers";
+        $data['main']['open_question_list']['right']['url'] = site_url("exam/designer");
+        $data['main']['open_question_list']['title'] = "Employee List";
+        $data['main']['open_question_list']['page'] = $this->load->view("assigneelist", $data, TRUE);
+
+        $this->load->view("theme/header", $data);
+        $this->load->view("theme/index", $data);
+        $this->load->view("theme/footer", $data);
+        
         
     }
     
