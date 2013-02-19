@@ -1,5 +1,5 @@
 <?php
-ajaxform("examformedit", 'addexam');
+//ajaxform("examformedit", 'addexam');
 
 $q['table'] = 'qBank';
 $q['where']['questiontype'] = 'multiple choice multiple answer';
@@ -48,7 +48,9 @@ if (!empty($subjectid) && ($subjectid > 0)) {
 ?>
 
 <div id="addexam"></div>
-<form method="post" action="<?php print site_url("exam/edit") ?>" id="examformedit">
+<!--<form method="post" action="<?php //print site_url("exam/edit") ?>" id="examformedit">-->
+<?php echo validation_errors(); ?>
+<?php echo form_open('exam/edit'); ?>
     <div style="width:36%; float:left;">
         <table width='100%'>
             <tr align="left">
