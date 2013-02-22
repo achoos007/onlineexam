@@ -48,7 +48,6 @@ class Exam extends CI_Controller {
     }
 
     function form($qid = 0) {
-        $this->load->helper('form');
 
         $data['subjectid'] = intval($qid);
         if (intval($data['subjectid']) > 0)
@@ -74,10 +73,7 @@ class Exam extends CI_Controller {
         $this->form_validation->set_rules('mark', 'Minimum Mark', 'required|integer|max_length[3]');
         $this->form_validation->set_rules('duration', 'Duration', 'required|integer');
         $this->form_validation->set_rules('alerttime', 'Alert time', 'required|integer');
-        $this->form_validation->set_rules('productid', 'Product', 'required');
-        $this->form_validation->set_rules('moduleid', 'Module', 'required');
-	$this->form_validation->set_rules('subjectid', 'Subject', 'required');
-	$this->form_validation->set_rules('radio-choice-2', 'Mark', 'required');
+
         if ($this->form_validation->run() == FALSE) {
             echo validation_errors();
         } else {
@@ -143,12 +139,12 @@ class Exam extends CI_Controller {
         $pid = intval($this->input->post('clkid'));
             $query = $this->db->query("select moduleid,name from module where productid='$pid'");
         if ($query->num_rows() > 0) {
-            print "<option value=''>Select</option>";
+            print "<option value='select'>Select</option>";
             foreach ($query->result() as $row) {
 
                 $moduleid = $row->moduleid;
                 $modulename = $row->name;
-                print "<option value='" . $moduleid . set_select('moduleid',$moduleid). "'>" . $modulename . " </option>";
+                print "<option value='" . $moduleid . "'>" . $modulename . " </option>";
             }
         }
     }
@@ -157,11 +153,11 @@ class Exam extends CI_Controller {
         $mid = intval($this->input->post('clkid'));
         $query=  $this->db->query("select n_subjectid,c_subject from tbl_subject where n_specid='$mid'");
         if($query->num_rows() > 0){
-            print "<option value=''>Select</option>";
+            print "<option value='select'>Select</option>";
             foreach ($query->result() as $row){
                 $subjectid=$row->n_subjectid;
                 $subjectname=$row->c_subject;
-                print"<option value='".$subjectid.set_select('subjectid',$subjectid)."'>".$subjectname."</option>";
+                print"<option value='".$subjectid."'>".$subjectname."</option>";
             }
         }
     }
@@ -197,63 +193,6 @@ class Exam extends CI_Controller {
         $this->load->view("theme/footer", $data);
         
         
-    }
-    function user_selection(){
-        
-        $userid=intval($this->input->post('clkid'));
-        $qid=intval($this->input->post('qid'));
-        
-         // for getting Question Designer name and User Name
-        
-        $details['table']='qdesigner';
-        $details['where']['qDesignerId']=$qid;
-        $details=  getsingle($details);
-        $title=$details['title'];
-              
-        $user_det['table']='tbl_staffs';
-        $user_det['where']['staff_id']=$userid;
-        $user_det=  getsingle($user_det);
-        $firstname=ucfirst(strtolower($user_det['first_name']));
-        $lastname=  ucfirst(strtolower($user_det['last_name']));
-        $username=$firstname."&nbsp".$lastname;
-        
-        $assign['table']='assigned_users';
-        $assign['where']['user_id']=$userid;
-        $assign['where']['qid']=$qid;
-        $count=  total_rows($assign);
-        
-       
-        
-        $update['table']='assigned_users';
-        if($count>0)
-        {
-        $assign=  getsingle($assign);
-        $status=$assign['status'];
-        
-        
-            if($status=='Active'){
-                $update['where']['user_id']=$userid;
-                $update['where']['qid']=$qid;
-                $update['data']['status']='Inactive';
-                update($update);
-                print "<b>".$username ."</b>&nbsp; has been removed from <b>".$title."</b> exam";
-            }
-            else{
-                $update['where']['user_id']=$userid;
-                $update['where']['qid']=$qid;
-                $update['data']['status']='Active';
-                update($update);
-                print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
-            }
-        }
-        
-        else {
-            $update['data']['user_id']=$userid;
-            $update['data']['qid']=$qid;
-            $update['data']['status']='Active';
-            insert($update);
-            print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
-        }
     }
     
 
