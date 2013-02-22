@@ -1,35 +1,7 @@
 <?php
 //ajaxform("examformedit", 'addexam');
 
-$q['table'] = 'qBank';
-$q['where']['questiontype'] = 'multiple choice multiple answer';
-$q = total_rows($q);
-
-$qs['table'] = 'qBank';
-$qs['where']['questiontype'] = 'multiple choice single answer';
-$qs = total_rows($qs);
-
-$qt['table'] = 'qBank';
-$qt['where']['questiontype'] = 'yes / no';
-$qt = total_rows($qt);
-
-$qd['table'] = 'qBank';
-$qd['where']['questiontype'] = 'short text';
-$qd = total_rows($qd);
-
-$qf['table'] = 'qBank';
-$qf['where']['questiontype'] = 'file upload';
-$qf = total_rows($qf);
-
-
 $b = enum('qBank', 'questiontype');
-
-
-
-
-
-
-
 if (!empty($subjectid) && ($subjectid > 0)) {
     $questid['table'] = 'qdesigner';
     $questid['where']['qDesignerid'] = $subjectid;
@@ -190,6 +162,24 @@ if ($query->num_rows() > 0) {
 								$qe['where']['level']='easy';
 								$qe['limit'] = 10000000;
 								$qe = getrecords($qe);
+                                                                
+                                                                $qm['table'] = 'qBank';
+								$qm['where']['questiontype'] = $e;
+								$qm['where']['level']='moderate';
+								$qm['limit'] = 10000000;
+								$qm = getrecords($qm);
+                                                                
+                                                                $qt['table'] = 'qBank';
+								$qt['where']['questiontype'] = $e;
+								$qt['where']['level']='tough';
+								$qt['limit'] = 10000000;
+								$qt = getrecords($qt);
+                                                                
+                                                                $qma['table'] = 'qBank';
+								$qma['where']['questiontype'] = $e;
+								$qma['where']['level']='mandatory';
+								$qma['limit'] = 10000000;
+								$qma = getrecords($qma);
 
                                 print"<td align='center'>" . count($qrty['result']) . "</td>";
 
@@ -197,7 +187,14 @@ if ($query->num_rows() > 0) {
                                     $data['name'] = 'username';
                                     $data['id'] = 'username';
                                     $data['value'] = '';
-                                    $data['placeholder'] = count($qrty['result']);
+                                    if($i==0)
+                                        $data['placeholder'] = count($qe['result']);    
+                                    if ($i==1) 
+                                        $data['placeholder'] = count($qm['result']);
+                                    if ($i==2) 
+                                        $data['placeholder'] = count($qt['result']);
+                                    if($i==3)
+                                        $data['placeholder'] = count($qma['result']);
                                     $data['data-mini'] = 'true';
                                     $data['style'] = 'width:50%;';
 
