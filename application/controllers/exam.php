@@ -69,7 +69,7 @@ class Exam extends CI_Controller {
     function edit() {
         $data['menu'] = 'exam';
         //print_r($_POST);
-        $this->form_validation->set_rules('title', 'Title', 'required|alpha');
+        /*$this->form_validation->set_rules('title', 'Title', 'required|alpha');
         $this->form_validation->set_rules('mark', 'Minimum Mark', 'required|integer|max_length[3]');
         $this->form_validation->set_rules('duration', 'Duration', 'required|integer');
         $this->form_validation->set_rules('alerttime', 'Alert time', 'required|integer');
@@ -124,7 +124,23 @@ class Exam extends CI_Controller {
                 insert($update);
                 print "Data Inserted Successfully";
             }
-        }
+        }*/
+       $this->load->helper(array('form', 'url'));
+
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			$this->load->view('paper_designer');
+		}
+		else
+		{
+			$this->load->view('formsuccess');
+		}
     }
 
     function delete() {
@@ -193,6 +209,65 @@ class Exam extends CI_Controller {
         $this->load->view("theme/footer", $data);
         
         
+    }
+    
+    
+    function user_selection(){
+        
+        $userid=intval($this->input->post('clkid'));
+        $qid=intval($this->input->post('qid'));
+        
+         // for getting Question Designer name and User Name
+        
+        $details['table']='qdesigner';
+        $details['where']['qDesignerId']=$qid;
+        $details=  getsingle($details);
+        $title=$details['title'];
+              
+        $user_det['table']='tbl_staffs';
+        $user_det['where']['staff_id']=$userid;
+        $user_det=  getsingle($user_det);
+        $firstname=ucfirst(strtolower($user_det['first_name']));
+        $lastname=  ucfirst(strtolower($user_det['last_name']));
+        $username=$firstname."&nbsp".$lastname;
+        
+        $assign['table']='assigned_users';
+        $assign['where']['user_id']=$userid;
+        $assign['where']['qid']=$qid;
+        $count=  total_rows($assign);
+        
+       
+        
+        $update['table']='assigned_users';
+        if($count>0)
+        {
+        $assign=  getsingle($assign);
+        $status=$assign['status'];
+        
+        
+            if($status=='Active'){
+                $update['where']['user_id']=$userid;
+                $update['where']['qid']=$qid;
+                $update['data']['status']='Inactive';
+                update($update);
+                print "<b>".$username ."</b>&nbsp; has been removed from <b>".$title."</b> exam";
+            }
+            else{
+                $update['where']['user_id']=$userid;
+                $update['where']['qid']=$qid;
+                $update['data']['status']='Active';
+                update($update);
+                print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
+            }
+        }
+        
+        else {
+            $update['data']['user_id']=$userid;
+            $update['data']['qid']=$qid;
+            $update['data']['status']='Active';
+            insert($update);
+            print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
+        }
     }
     
 
