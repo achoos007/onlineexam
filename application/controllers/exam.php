@@ -196,6 +196,159 @@ class Exam extends CI_Controller {
     }
     
 
+    function execute($examid) {
+
+        $this->title = "Exam Preview";
+ 
+ 
+				$data['examid']=intval($examid);
+								
+				//-----------------Exam Executer starts --------------------
+				
+				
+				
+				
+					$ques['table']='qdesigner';
+					$ques['where']['qdesignerid']=$data['examid'];
+
+					$ques=getrecords($ques); 
+					if(!empty($ques['result'])){
+					$ques=$ques['result'];
+				
+				// [qDesignerId] => 4
+				// [title] => QuestDesigner
+				// [minMark] => 0
+				// [duration] => 0
+				// [alertTime] => 0
+				// [negative] => 0
+				// [grading] => 0
+				// [shuffling] => 0
+				// [timer] => 0
+				// [productid] => 4
+				// [moduleid] => 1
+				// [subjectid] => 1
+				// [markType] => 0
+				// [msEasy] => 0
+				// [msModerate] => 0
+				// [msTough] => 0
+				// [msMandatory] => 0
+				// [mmEasy] => 0
+				// [mmModerate] => 0
+				// [mmTough] => 0
+				// [mmMandatory] => 0
+				// [tfEasy] => 0
+				// [tfModerate] => 0
+				// [tfTough] => 0
+				// [tfMandatory] => 0
+				// [desEasy] => 0
+				// [desModerate] => 0
+				// [desTough] => 0
+				// [desMandatory] => 0
+				// [fileEasy] => 0
+				// [fileModerate] => 0
+				// [fileTough] => 0
+				// [fileMandatory] => 0
+				// [status] => 1
+				
+				
+				
+				
+				
+				
+				//-----------------Exam Executer ends --------------------
+ 
+ 
+  
+ 
+ 
+ 
+        $data['main']['open_question_list']['back'] = 1;
+        $data['main']['open_question_list']['title'] = "Examination Preview";
+        $data['main']['open_question_list']['page'] = $this->load->view("exam_execute", $data, TRUE);
+
+
+    }else{ 
+        $data['main']['error']['back'] = 1;
+        $data['main']['error']['title'] = "error";
+        $data['main']['error']['page'] = $this->load->view("error", $data, TRUE);
+		}
+        $this->load->view("theme/header", $data);
+        $this->load->view("theme/index", $data);
+        $this->load->view("theme/footer", $data);
+    }
+    
+    
+    
+    
+    function attend(){
+			
+			
+			
+			
+			   $this->menu = "exam";
+        $this->title = "Designer";
+        
+        $data['title']=" List View ";   
+        
+        
+        
+        
+        
+        $query=" select * from qBank order by RAND() limit 50 ";
+        $data['questions']=qry($query);
+        
+        
+        
+        
+        $q=0;
+        if(!empty($data['questions']['result'])){
+        foreach($data['questions']['result'] as $ques){
+					$q++;
+					
+        // $data['main']['open_question_list']['right']['text'] = "Previous Question Papers";
+        // $data['main']['open_question_list']['right']['url'] = site_url("exam/designer");
+        
+				$data['question'] = $ques; 
+        $data['main'][$q]['title'] = "Question ".$q;
+        $data['main'][$q]['footermenu'] = '
+         
+         
+        <div data-role="navbar">
+						<ul>
+							<li><a href="'.site_url("exam/attend/#2").'">Previous</a></li>
+							<li><a href="#2">Next</a></li>
+						</ul>
+				</div>
+         
+         ';
+         $data['main'][$q]['page'] = $this->load->view("questions", $data, TRUE);
+        
+        
+			}
+			}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        $this->load->view("theme/header", $data);
+        $this->load->view("theme/index", $data);
+        $this->load->view("theme/footer", $data);
+			
+			
+		}
 }
 
 /* End of file exam.php */
