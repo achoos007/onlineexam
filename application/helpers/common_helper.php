@@ -35,6 +35,9 @@ function total_rows($param){
 $keyid = getrecords($param);	 
 return count($keyid['result']);
 }
+function qry($param){  
+return  modelfn('common_model','qry',$param);	 
+}
 
 #---------------------------------------------------------------------------------------------------------------
 function getsingle($param){
