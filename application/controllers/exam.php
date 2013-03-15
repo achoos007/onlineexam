@@ -324,6 +324,8 @@ insert($insert);
 //-----------------Exam Executer ends --------------------
 
 $data['main']['open_question_list']['back'] = 1;
+$data['main']['open_question_list']['right']['text'] ='Manage Exam';
+$data['main']['open_question_list']['right']['url'] =site_url('manage/exam/'.$data['examid']);
 $data['main']['open_question_list']['title'] = "Examination Preview";
 $data['main']['open_question_list']['page'] = $this->load->view("exam_execute", $data, TRUE);
 

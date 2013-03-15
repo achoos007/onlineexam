@@ -60,6 +60,11 @@ $data['main'][$i]['page']  =	$this->load->view("question_dashboard",$data,TRUE);
 
 
 
+}else{
+	
+	
+$data['main']['error']['title']=	"Exam";
+$data['main']['error']['page']  =	$this->load->view("error",$data,TRUE); 
 }
 
 
