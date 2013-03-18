@@ -190,14 +190,14 @@ class Exam extends CI_Controller {
         $this->load->view("theme/footer",$data);
     }
     
-    function assigneelist(){
-        
+    function assigneelist($uid,$qid=0){       
         //print_r($_POST);
          $this->menu = "exam";
         $this->title = "Designer";
-        
         $data['title']=" List View ";  
-        $data['qid'] = intval($this->input->post('qdesignerid'));
+        $data['uid']=intval($uid);
+        $data['qid'] = intval($qid);
+        $data['$assignid'] = intval($assignid);
         $data['assigneeid']=intval($this->input->post('assigneeid'));
         $data['main']['open_question_list']['right']['text'] = "Previous Question Papers";
         $data['main']['open_question_list']['right']['url'] = site_url("exam/designer");
@@ -242,31 +242,37 @@ class Exam extends CI_Controller {
         if($count>0)
         {
         $assign=  getsingle($assign);
-        $status=$assign['status'];
+        $status=$assign['assign_status'];
         
         
             if($status=='Active'){
                 $update['where']['user_id']=$userid;
                 $update['where']['qid']=$qid;
-                $update['data']['status']='Inactive';
+                $update['data']['assign_status']='Inactive';
                 update($update);
-                print "<b>".$username ."</b>&nbsp; has been removed from <b>".$title."</b> exam";
+                //print "<b>".$username ."</b>&nbsp; has been removed from <b>".$title."</b> exam";
+                $flg=0;
+                print $flg;
             }
             else{
                 $update['where']['user_id']=$userid;
                 $update['where']['qid']=$qid;
-                $update['data']['status']='Active';
+                $update['data']['assign_status']='Active';
                 update($update);
-                print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
+                //print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
+                $flg=1;
+                print $flg;
             }
         }
         
         else {
             $update['data']['user_id']=$userid;
             $update['data']['qid']=$qid;
-            $update['data']['status']='Active';
+            $update['data']['assign_status']='Active';
             insert($update);
-            print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
+            //print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
+            $flg=1;
+            print $flg;
         }
     }
     
