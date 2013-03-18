@@ -21,6 +21,34 @@ class Manage extends CI_Controller {
 	
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		
 		
 function exam($examid=0) {
@@ -51,7 +79,7 @@ foreach( $qu as $d){
 $i++;
 
 $data['question']='-------------------------'.$d.'----------------------------------------------------';
-$data['qid']=$i;
+$data['qid']=$d;
 
 $data['main'][$i]['title']=	"Exam";
 $data['main'][$i]['page']  =	$this->load->view("question_dashboard",$data,TRUE); 

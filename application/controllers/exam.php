@@ -195,6 +195,28 @@ $this->load->view("theme/footer", $data);
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function execute($examid=0) {
 
 $this->title = "Exam Preview";
