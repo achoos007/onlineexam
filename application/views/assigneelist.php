@@ -1,39 +1,70 @@
 <?php
-if ($assigneeid == '1') {
-    // for getting country code
+
+
+
+if ($uid == '1') {
+// for getting country code
+
     $co['table'] = 'country';
     $co = getrecords($co);
 
+// For Baharin
 
     $bhr['table'] = 'tbl_staffs';
-    $bhr['where']['status'] = 'Active';
-    $bhr['where']['country'] = 'BHR';
     $bhr['order']['first_name'] = 'asc';
+    $bhr['join']['assigned_users']='tbl_staffs.staff_id=assigned_users.user_id and qid="'.$qid.'"';
+    $bhr['where']['status'] = 'Active';
+    $bhr['where']['country'] = 'BHR';	
+    $bhr['limit']=1000000;
     $bhr = getrecords($bhr);
+    $countbhr=count($bhr['result']);
+
+//For India	
 
     $ind['table'] = 'tbl_staffs';
-    $ind['where']['status'] = 'Active';
+		$ind['order']['first_name'] = 'asc';
+    $ind['join']['assigned_users']='tbl_staffs.staff_id=assigned_users.user_id and qid="'.$qid.'"';
     $ind['where']['country'] = 'IND';
-    $ind['order']['first_name'] = 'asc';
+    $ind['where']['status'] = 'Active';
+    $ind['limit']=1000000;
     $ind = getrecords($ind);
+    $countind=count($ind['result']);
+
+
+    
+// For Kuwait    
 
     $kwt['table'] = 'tbl_staffs';
+    $kwt['order']['first_name'] = 'asc';
+    $kwt['join']['assigned_users']='tbl_staffs.staff_id=assigned_users.user_id and qid="'.$qid.'"';
     $kwt['where']['status'] = 'Active';
     $kwt['where']['country'] = 'KWT';
-    $kwt['order']['first_name'] = 'asc';
+    $kwt['limit']=1000000;
     $kwt = getrecords($kwt);
+    $countkwt=count($kwt['result']);
+
+//For Oman
 
     $omn['table'] = 'tbl_staffs';
+    $omn['order']['first_name'] = 'asc';
+    $omn['join']['assigned_users']='tbl_staffs.staff_id=assigned_users.user_id and qid="'.$qid.'"';
     $omn['where']['status'] = 'Active';
     $omn['where']['country'] = 'OMN';
-    $omn['order']['first_name'] = 'asc';
+    $omn['limit']=1000000;
     $omn = getrecords($omn);
+    $countomn=count($omn['result']);
+
+
+//For UAE
 
     $are['table'] = 'tbl_staffs';
+    $are['order']['first_name'] = 'asc';
+    $are['join']['assigned_users']='tbl_staffs.staff_id=assigned_users.user_id and qid="'.$qid.'"';
     $are['where']['status'] = 'Active';
     $are['where']['country'] = 'ARE';
-    $are['order']['first_name'] = 'asc';
+    $are['limit']=1000000; 
     $are = getrecords($are);
+    $countare=count($are['result']);
 
 
 
@@ -55,40 +86,120 @@ if ($assigneeid == '1') {
                     ?>
                     <li data-role="list-divider"><?php print $cname; ?></li>
                     <?php
+                   
                     if ($code == 'BHR') {
-                        foreach ($bhr['result'] as $row) {
+					
+
+                    foreach ($bhr['result'] as $row) {
+						$st = 'bhr' . $row['staff_id'];
+						$assign_status=$row['assign_status'];
+							
                             $str = ucfirst(strtolower($row['first_name'])) . "&nbsp;" . ucfirst(strtolower($row['last_name']));
-                            print"<li class='bhr' id='".$row['staff_id']."' ><a  href=''>" . $str ."</a></li>";
+                            
+                            if ($assign_status == 'Active'){
+                                print"<li style='background:#999666;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+                            elseif($assign_status == 'Inactive'){
+                                print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+							else{
+								print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
                             
                         }
+	
+	
+					
+					
                     }
                     if ($code == 'IND') {
-                        foreach ($ind['result'] as $row) {
+					
+											foreach ($ind['result'] as $row) {
+															
+						$st = 'bhr' . $row['staff_id'];
+						$assign_status=$row['assign_status'];		
                             $str = ucfirst(strtolower($row['first_name'])) . "&nbsp;" . ucfirst(strtolower($row['last_name']));
-                            print"<li class='bhr' id='" . $row['staff_id'] . "'><a href=''>" . $str."</a></li>";
+                            
+                            if ($assign_status == 'Active'){
+                                print"<li style='background:#d0d181	;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+                            elseif($assign_status == 'Inactive'){
+                                print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+							else{
+								print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
                             
                         }
+											
+					
+						
+                       
                     }
                     if ($code == 'KWT') {
-                        foreach ($kwt['result'] as $row) {
+
+                    foreach ($kwt['result'] as $row) {
+						$st = 'bhr' . $row['staff_id'];
+						$assign_status=$row['assign_status'];
+							
                             $str = ucfirst(strtolower($row['first_name'])) . "&nbsp;" . ucfirst(strtolower($row['last_name']));
-                            print"<li><a href=''>" . $str."</a></li>";
+                            
+                            if ($assign_status == 'Active'){
+                                print"<li style='background:#999666;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+                            elseif($assign_status == 'Inactive'){
+                                print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+							else{
+								print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
                             
                         }
+
+		
                     }
                     if ($code == 'OMN') {
-                        foreach ($omn['result'] as $row) {
+
+                    foreach ($omn['result'] as $row) {
+						$st = 'bhr' . $row['staff_id'];
+						$assign_status=$row['assign_status'];
+							
                             $str = ucfirst(strtolower($row['first_name'])) . "&nbsp;" . ucfirst(strtolower($row['last_name']));
-                            print"<li class='bhr' id='" . $row['staff_id'] . "'><a href=''>" . $str."</a></li>";
+                            
+                            if ($assign_status == 'Active'){
+                                print"<li style='background:#999666;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+                            elseif($assign_status == 'Inactive'){
+                                print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+							else{
+								print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
                             
                         }
+
+			
                     }
                     if ($code == 'ARE') {
-                        foreach ($are['result'] as $row) {
+
+                    foreach ($are['result'] as $row) {
+						$st = 'bhr' . $row['staff_id'];
+						$assign_status=$row['assign_status'];
+							
                             $str = ucfirst(strtolower($row['first_name'])) . "&nbsp;" . ucfirst(strtolower($row['last_name']));
-                            print"<li class='bhr' id='" . $row['staff_id'] . "'><a href=''>" . $str ."</a></li>";
+                            
+                            if ($assign_status == 'Active'){
+                                print"<li style='background:#999666;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+                            elseif($assign_status == 'Inactive'){
+                                print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
+							else{
+								print"<li style='background:#f1c8cf;'  class='$st bhr' id='".$row['staff_id']."' ><a  href=''>" . $str . "</a></li>";
+							}
                             
                         }
+
                     }
                 }
                 ?>
@@ -112,7 +223,14 @@ if ($assigneeid == '1') {
                 $('.bhr').click(function(){
                 clickId=this.id;
                 $.post('".site_url('exam/user_selection/')."',{clkid:clickId,qid:$qid},function(data){
-                     $('#sucess-msg').html(data);
+                    // $('#sucess-msg').html(data);
+		//$('.bhr'+clickId).css('background','red'); 
+		 if(data==0)
+                {
+                $('.bhr'+clickId).css('background','#f1c8cf'); 
+                }
+                else
+                $('.bhr'+clickId).css('background','#d0d181');        		
                 });
                    
                 });
