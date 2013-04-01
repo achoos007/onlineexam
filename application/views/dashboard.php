@@ -1,108 +1,176 @@
-<div class="dashboard-box">
-<div class="dashboard-title"> 
-Scheduled Exam Calender
-</div> 
+<style type='text/css'>
+.menu-box{
+padding:5px; 
+background-color:#EBEBEB;  
+border:1px outset #A1A1A1;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px; 
+width:127px;
+height:125px;
+margin:10px;
+float:left;
+overflow:hidden;
+}
+.menu-image{
+padding:5px; 
+background-color:#EBEBEB;  
+border:1px outset #A1A1A1;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px; 
+height:75px;
+overflow:hidden;
+}
+</style>
 
+
+
+
+
+
+
+
+<a href="<?php print site_url('subjects/form');?>" data-rel="dialog" >
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/subject.jpg');?>" border='0' width='115px' />
+</div>
+<h3>
+Add Subjects
+</h3>
+</div>
+</a>
+
+<a href='<?php print site_url('subjects');?>'> 
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/subject1.jpg');?>" border='0' width='115px' />
+</div>
+<h3>
+Manage Subjects
+</h3>
+</div>
+</a>
+
+<a href='<?php print site_url('question/bank');?>'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/quest.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Question Bank
+</h3>
+</div>
+</a>
+<a href="<?php print site_url('question/form/0');?>" data-rel='dialog' data-mini='true'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/quest1.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Add Questions
+</h3>
+</div>
+</a>
+
+<a href='<?php print site_url('question');?>'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/quest2.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Open Questions
+</h3>
+</div>
+</a>
+<a href="<?php print site_url('question/upload');?>" data-rel='dialog' data-mini='true'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/quest3.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Upload Questions
+</h3>
+</div>
+</a>
+
+
+
+<a href='<?php print site_url('exam/designer');?>'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/write1.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Recent Exams
+</h3>
+</div>
+</a>
+
+
+
+<a href='<?php print site_url('exam/form');?>'>
+<a href='<?php print site_url('exam/execute');?>'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/exam.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Execute Exams
+</h3>
+</div>
+</a>
+
+
+
+<a href='<?php print site_url('exam/form');?>'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/write2.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Create Exams
+</h3>
+</div>
+</a>
+
+
+
+<a href='<?php print site_url('exam/designer');?>'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/write5.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Assign Exams
+</h3>
+</div>
+</a>
+
+
+
+<a href='<?php print site_url('exam/designer');?>'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/write3.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Manage Exams
+</h3>
+</div>
+</a>
+
+
+
+<a href='<?php print site_url('manage/validate');?>'>
+<div class='menu-box' align='center'>
+<div class='menu-image' align='center'>
+	<img src="<?php print base_url('images/write4.jpg');?>" border='0'width='115px' />
+</div>
+<h3>
+Validate Exams
+</h3>
+</div>
+</a>
  
- <?php 
- 
- $data = array(
-               3  =>site_url('general/day'), 
-               9  =>site_url('general/day'), 
-               11  =>site_url('general/day'), 
-               18  =>site_url('general/day'), 
-               22  =>site_url('general/day'), 
-               14  =>site_url('general/day'), 
-               21  =>site_url('general/day'), 
-               5  =>site_url('general/day'),  
-               26  =>site_url('general/day') 
-             );
-
-echo $this->calendar->generate(2012, 11, $data);
- 
- 
- 
- ?>
-
-</div> 
-
-
-
-<div class="dashboard-box">
-<div class="dashboard-title"> 
-Quick Preview
-</div> 
-
-<div class='hr' ><a href="#">Exams Assigned :10</a></div>
-<div class='hr' ><a href="#">Exams Attended :8</a></div>
-<div class='hr' ><a href="#">Exam requests :20</a></div>
-<div class='hr' ><a href="#">Answer Reviews:5 </a></div>
- 
-
-
-
-</div> 
-
-
-
-
-<div class="dashboard-box">
-<div class="dashboard-title"> 
-Assign New Exams
-</div> 
-
- 
-<div class='hr' ><a href="#">IIMTS MBA Dec 2012</a></div>
-<div class='hr' ><a href="#">HR Exam Dec 2012</a></div>
-<div class='hr' ><a href="#">IIMTS Exams January 2013</a></div>
-<div class='hr' ><a href="#">Interview Exams January 2013</a></div>
-
-
-</div> 
-
-
-
-<div class="dashboard-box">
-<div class="dashboard-title"> 
-Scheduled Exams
-</div> 
-
- 
-<div class='hr' ><a href="#">IIMTS MBA Dec 2012 : 12 people</a></div>
-<div class='hr' ><a href="#">HR Exam Dec 2012 : 9 People</a></div>
-<div class='hr' ><a href="#">IIMTS Exams January 2013 : 5 People</a></div>
-<div class='hr' ><a href="#">Interview Exams : 18 People</a></div>
-
-
-</div> 
-
-
-<div class="dashboard-box">
-<div class="dashboard-title"> 
-Current Exams
-</div> 
-
- 
-<div class='hr' ><a href="#">IIMTS MBA Dec 2012 : 2 People</a></div>
-<div class='hr' ><a href="#">HR Exam Dec 2012 :0 People</a></div>
-<div class='hr' ><a href="#">IIMTS Exams January 2013 : 3 People</a></div>
-<div class='hr' ><a href="#">Appraisal : 3 People</a></div>
-
-
-</div> 
-
-
-
-<div class="dashboard-box">
-<div class="dashboard-title"> 
-New Registrations
-</div> 
-
- 
-<div class='hr' ><a href="#">IIMTS 10 people</a></div>
-<div class='hr' ><a href="#">Employees 6 people</a></div>
-<div class='hr' ><a href="#">Students 35 People</a></div>
-
-
-</div> 
-

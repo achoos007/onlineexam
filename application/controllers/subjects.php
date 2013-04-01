@@ -2,51 +2,31 @@
 
 class Subjects extends CI_Controller {
 
-
-
-
 public function index()
 {
 
 $this->menu="subjects";
 $this->title="Subjects";
 
-
-
 $this->show();
-
-
 }
-
-
 
 function show(){
 $data['menu']='subjects';
 
-
-
 $this->menu="subjects";
 $this->title="Subjects";
-
-
 
 $data['main']['subjectList']['title']="Subjects List"; 
 $data['main']['subjectList']['right']['url']=site_url("subjects/form"); 
 $data['main']['subjectList']['right']['text']='Add New Subject'; 
-	$data['main']['subjectList']['right']['option']='data-rel="dialog" '; 
+$data['main']['subjectList']['right']['option']='data-rel="dialog" '; 
 $data['main']['subjectList']['page']=		$this->load->view("subjects",$data,TRUE); 
-
-
-
-
 
 $this->load->view("theme/header",$data);
 $this->load->view("theme/index",$data);
 $this->load->view("theme/footer",$data);
 }
-
-
-
 
 function form($sid=0){
 
@@ -62,10 +42,6 @@ if(intval($data['subjectid'])>0)
 $data['btnText']='Edit';
 else
 $data['btnText']='Add';
-
-
-
-
 
 $data['menu']='subjects'; 
 

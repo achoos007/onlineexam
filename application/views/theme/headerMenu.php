@@ -38,7 +38,7 @@
 <li><a href="<?php echo site_url("subjects/");?>" data-ajax='false'  <?php 		print ($this->menu=="subjects")? ' class="ui-btn-active ui-state-persist" ':'';		?> >Subjects</a></li>
 <li><a href="<?php echo site_url("question");?>" data-ajax='false'  <?php 		print ($this->menu=="question")? ' class="ui-btn-active ui-state-persist" ':'';		?> >Upload Questions</a></li>
 <li><a href="<?php echo site_url("exam/designer");?>" data-ajax='false'   <?php 		print ($this->menu=="exam")? ' class="ui-btn-active ui-state-persist" ':'';		?> >Exam</a></li>
-<li><a href="<?php echo site_url("manage/exam/");?>" data-ajax='false'  <?php 		print ($this->menu=="result")? ' class="ui-btn-active ui-state-persist" ':'';		?>  >Manage Exam</a></li>
+<li><a href="<?php echo site_url("manage/validate/");?>" data-ajax='false'  <?php 		print ($this->menu=="result")? ' class="ui-btn-active ui-state-persist" ':'';		?>  >Validate Exam</a></li>
 </ul>
 </div>
 

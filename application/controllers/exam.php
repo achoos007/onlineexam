@@ -173,28 +173,90 @@ $this->load->view("examAssign",$data);
 $this->load->view("theme/footer",$data);
 }
 
-function assigneelist(){
+function assigneelist($uid=0,$qid=0){       
+        //print_r($_POST);
+         $this->menu = "exam";
+        $this->title = "Designer";
+        $data['title']=" List View ";  
+        $data['uid']=intval($uid);
+        $data['qid'] = intval($qid);
+        $data['$assignid'] = intval($assignid);
+        $data['assigneeid']=intval($this->input->post('assigneeid'));
+        $data['main']['open_question_list']['right']['text'] = "Previous Question Papers";
+        $data['main']['open_question_list']['right']['url'] = site_url("exam/designer");
+        $data['main']['open_question_list']['title'] = "Employee List";
+        $data['main']['open_question_list']['page'] = $this->load->view("assigneelist", $data, TRUE);
 
-//print_r($_POST);
-$this->menu = "exam";
-$this->title = "Designer";
+        $this->load->view("theme/header", $data);
+        $this->load->view("theme/index", $data);
+        $this->load->view("theme/footer", $data);
+        
+        
+    }
 
-$data['title']=" List View ";  
-$data['qid'] = intval($this->input->post('qdesignerid'));
-$data['assigneeid']=intval($this->input->post('assigneeid'));
-$data['main']['open_question_list']['right']['text'] = "Previous Question Papers";
-$data['main']['open_question_list']['right']['url'] = site_url("exam/designer");
-$data['main']['open_question_list']['title'] = "Employee List";
-$data['main']['open_question_list']['page'] = $this->load->view("assigneelist", $data, TRUE);
-
-$this->load->view("theme/header", $data);
-$this->load->view("theme/index", $data);
-$this->load->view("theme/footer", $data);
-
-
-}
-
-
+   function user_selection(){
+        
+        $userid=intval($this->input->post('clkid'));
+        $qid=intval($this->input->post('qid'));
+        
+         // for getting Question Designer name and User Name
+        
+        $details['table']='qdesigner';
+        $details['where']['qDesignerId']=$qid;
+        $details=  getsingle($details);
+        $title=$details['title'];
+              
+        $user_det['table']='tbl_staffs';
+        $user_det['where']['staff_id']=$userid;
+        $user_det=  getsingle($user_det);
+        $firstname=ucfirst(strtolower($user_det['first_name']));
+        $lastname=  ucfirst(strtolower($user_det['last_name']));
+        $username=$firstname."&nbsp".$lastname;
+        
+        $assign['table']='assigned_users';
+        $assign['where']['user_id']=$userid;
+        $assign['where']['qid']=$qid;
+        $count=  total_rows($assign);
+        
+       
+        
+        $update['table']='assigned_users';
+        if($count>0)
+        {
+        $assign=  getsingle($assign);
+        $status=$assign['assign_status'];
+        
+        
+            if($status=='Active'){
+                $update['where']['user_id']=$userid;
+                $update['where']['qid']=$qid;
+                $update['data']['assign_status']='Inactive';
+                update($update);
+                //print "<b>".$username ."</b>&nbsp; has been removed from <b>".$title."</b> exam";
+                $flg=0;
+                print $flg;
+            }
+            else{
+                $update['where']['user_id']=$userid;
+                $update['where']['qid']=$qid;
+                $update['data']['assign_status']='Active';
+                update($update);
+                //print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
+                $flg=1;
+                print $flg;
+            }
+        }
+        
+        else {
+            $update['data']['user_id']=$userid;
+            $update['data']['qid']=$qid;
+            $update['data']['assign_status']='Active';
+            insert($update);
+            //print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
+            $flg=1;
+            print $flg;
+        }
+    }
 
 
 
@@ -434,6 +496,9 @@ $this->load->view("theme/footer", $data);
 
 
 }
+
+
+
 }
 
 /* End of file exam.php */

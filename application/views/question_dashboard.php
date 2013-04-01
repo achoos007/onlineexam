@@ -29,13 +29,14 @@ print '
 
 ';
 print "</div>";
-
+$p=$id-1;
+$q=$id+1;
 ?>
 <div data-role="footer" data-theme='b'>		
 	<div data-role="navbar">
 		<ul>
-			<li><a href="<?php print site_url('manage/exam/17').'#'.($qid+1);?>" >One</a></li>
-			<li><a href="<?php print site_url().'#'.($qid+2);?>">two</a></li> 
+			<li><a href="<?php print site_url('manage/exam/13').'#'.('question-'.$p);?>" >Previous</a></li>
+			<li><a href="<?php print site_url('manage/exam/13').'#'.('question-'.$q);?>">Next</a></li> 
 		</ul>
 	</div><!-- /navbar -->
 </div><!-- /footer -->

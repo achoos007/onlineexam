@@ -29,12 +29,12 @@ $list = getrecords($list);
                                 <div ><h4>Status :<?php echo $st ?></h4></div>
 
                             </td>
-                            <td>  
+                            <td width="100px">  
 
-                                <?php
+                                   <?php
                                  if ($o['status'] == 1)
-                                print dialog("exam/assign/" . $o['qDesignerId'], 'Assign');
                                 ?>
+                                <a href="#popupMenu1" data-rel="popup" data-role="button" data-theme="b" data-mini="true" data-inline="true">Assign</a>            
 
                             </td>
                             <td width="100px">
@@ -56,3 +56,9 @@ $list = getrecords($list);
         ?>
     </div>
 </div> 
+<div data-role="popup" id="popupMenu1" data-theme="a" data-mini='true'>
+				<ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="b" data-mini='true'>
+					<li><a href="<?php print site_url('exam/assigneelist/1/' . $o['qDesignerId']);?>" data-mini='true'>Employees</a></li>
+					<li><a href="<?php print site_url('exam/assigneelist/2/');?>" data-mini='true'>Candidates</a></li> 
+				</ul>
+		</div>
