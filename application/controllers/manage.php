@@ -108,6 +108,45 @@ $this->load->view("theme/header",$data);
 $this->load->view("theme/index",$data);
 $this->load->view("theme/footer",$data);
 }
+
+function answerexam(){
+	//print "<div>Hello</div>";
+	//$optionid = $this->input->post('clkid');
+	$qid=intval($this->input->post('qid'));
+	$data['qid'] = intval($this->input->post('qid',TRUE));
+	print"hai".$qid;
+	
+	$ansexam['table']='test';
+	$ansexam['where']['qBankid']=$qid;
+	$count=total_rows($ansexam);
+echo "Count".$count;
+	$update['table'] = 'test';
+	$update['data']['qBankid'] = $qid;
+	if($qid=='a'){
+	$update['data']['option1'] = $this->input->post('clkid');
+	echo"AA";
+}
+	else{
+	$update['data']['option2'] = $this->input->post('clkid');
+	echo"BB";
+}
+
+Print"Dataaaaa".$data['qid'];
+	/*if ($count > 0) {
+$update['where']['qBankid'] = $qid;
+if (update($update)) {
+print"Data Updated Sucessfully";
+}
+else
+print"Error Occured";
+}
+else {
+insert($update);
+print "Data Inserted Successfully";
+}
+	*/
+	
+}
 }
 
 /* End of file exam.php */
