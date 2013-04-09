@@ -3,10 +3,9 @@
 
 $que['table']='qBank';
 $que['where']['qBankid']=$qid;
-$que=getsingle($que);
-print_r($que);
+$que=getsingle($que); 
 $hint=$que['hint1'];
-print "QID".$qid;
+//print "QID".$qid;
 $questiontype=$que['questiontype'];
 
 
