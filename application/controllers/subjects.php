@@ -20,7 +20,7 @@ $this->title="Subjects";
 $data['main']['subjectList']['title']="Subjects List"; 
 $data['main']['subjectList']['right']['url']=site_url("subjects/form"); 
 $data['main']['subjectList']['right']['text']='Add New Subject'; 
-$data['main']['subjectList']['right']['option']='data-rel="dialog" '; 
+$data['main']['subjectList']['right']['option']=' data-rel="dialog" '; 
 $data['main']['subjectList']['page']=		$this->load->view("subjects",$data,TRUE); 
 
 $this->load->view("theme/header",$data);

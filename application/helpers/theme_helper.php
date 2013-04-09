@@ -35,12 +35,12 @@ function closedialog(){
 
 function dialog($url,$text='popup'){
 	
-	$b='<a href="'.site_url($url).'" data-role="button" data-rel="dialog" data-inline="true" data-mini="true" data-theme="b">'.ucwords($text).'</a>';
+	$b='<a href="'.site_url($url).'" data-role="button" data-rel="dialog"   data-mini="true" data-theme="b">'.ucwords($text).'</a>';
 	return $b;
 }
 function submit($t='Save',$id='submit',$class='submit'){
 	 return '
-	 <input type="submit" id="'.$id.'" name="'.$id.'" class="'.$class.'" data-role="button" data-inline="true" data-mini="true" data-theme="b" value="'.ucwords($t).'" />
+	 <input type="submit" id="'.$id.'" name="'.$id.'" class="'.$class.'" data-role="button"   data-mini="true" data-theme="b" value="'.ucwords($t).'" />
 	 ';
 	
 }
@@ -52,12 +52,12 @@ function hidden($id='id',$val='default'){
 }
 function button($t='Save',$id='submit',$class='submit'){
 	 return '
-	 <input type="button" id="'.$id.'" name="'.$id.'"  class="'.$class.'" data-role="button" data-inline="true" data-mini="true" data-theme="b" value="'.ucwords($t).'" />
+	 <input type="button" id="'.$id.'" name="'.$id.'"  class="'.$class.'" data-role="button"  data-mini="true" data-theme="b" value="'.ucwords($t).'" />
 	 ';
 	
 }
 function close($t='close'){
-	$b='<a href="#" data-role="button" data-rel="back" data-inline="true" data-mini="true" data-theme="b">'.ucwords($t).'</a>';
+	$b='<a href="#" data-role="button" data-rel="back" data-mini="true" data-theme="b">'.ucwords($t).'</a>';
 	return $b;
 	
 }

@@ -27,8 +27,18 @@ if(!empty($main)){
 			
 			$option=empty($value['right']['option'])? '': $value['right']['option'];
 			
-			if(!empty($value['right']))
-			print "<a href='".$value['right']['url']."' ".$option."   class='ui-btn-right'>".$value['right']['text']."</a>";
+			if(!empty($value['right'])){
+				
+				
+				
+  print "<a href='".$value['right']['url']."' ".$option." data-mini='true' data-role='button'  class='ui-btn-right' style='width:200px;'>".$value['right']['text']."</a>";
+ 
+//print "<a href='#'   data-role='button'  data-mini='true'  class='ui-btn-right'>saxan</a>";
+
+}
+
+
+
 			print " </div> ";
 			
 			print "<div data-role='content'>			";
