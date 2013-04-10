@@ -22,7 +22,7 @@
 													<label for='checkbox-2b' style='border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;'>
 															<img src='".base_url('images/question.jpg')."' style='float:left;width:80px;height:80px'/>
 															<label  style='float:left;padding:10px 0px 0px 10px;'> 
-																	<h3>".format($o['question'])."</h3>
+																	<h3>".truncate($o['question'],90)."</h3>
 																	<p>".$o['questiontype']."</p>
 															</label> 
 													</label>
