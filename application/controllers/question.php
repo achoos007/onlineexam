@@ -6,7 +6,7 @@ class Question extends CI_Controller {
 
 	 
 
-	public function index($start=0){
+public function index($start=0){
 
 $data['start'] =intval($start);
 
@@ -14,13 +14,7 @@ $this->menu="question";
 
 $this->title="Question";
 
-
-
 $this->open($data['start']);
-
-
-
-
 
 }
 
@@ -39,7 +33,6 @@ $data['menu']='question';
 
 
 $this->load->helper('text');
-
 
 
 $this->menu="question";
@@ -138,7 +131,10 @@ function qupload(){
 
 }
 
+function assignsub(){
 
+pa($_POST);
+}
 
 function upload(){
 
@@ -316,7 +312,7 @@ $sub['data']['subjectid']=$this->input->post('sub_'.$sub['n_subjectid']);
 
 $sub['data']['entrydate']=entrydate();
 
-//insert($sub);
+insert($sub);
 
 }
 
