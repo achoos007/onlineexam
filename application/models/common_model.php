@@ -74,9 +74,11 @@ $this->db->where($param['where']);
 
   
 
-if(!empty($param['orwhere']))
-$this->db->or_where($param['orwhere'] );
+if(!empty($param['wherein'])){
+foreach($param['wherein'] as $k=>$v)
+$this->db->where_in($k,$v);
 
+}
 
 
 if(!empty($param['orwherein'])){
@@ -90,12 +92,10 @@ $this->db->or_where_in($k,$v);
 $ap='';
 
 
+if(!empty($param['orwhere']))
+$this->db->or_where($param['orwhere'] );
 
-if(!empty($param['wherein'])){
-foreach($param['wherein'] as $k=>$v)
-$this->db->where_in($k,$v);
 
-}
 
 
 
@@ -404,8 +404,23 @@ function delete($param)
 
 {
 
-$this->db->where($param['where']);
 
+if(!empty($param['where']))   
+
+$this->db->where($param['where']);  
+
+if(!empty($param['wherein'])){
+foreach($param['wherein'] as $k=>$v)
+$this->db->where_in($k,$v);
+
+}
+
+
+if(!empty($param['orwherein'])){
+foreach($param['orwherein'] as $k=>$v)
+$this->db->or_where_in($k,$v);
+
+}
 return $this->db->delete($param['table']); 
 
 }

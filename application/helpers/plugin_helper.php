@@ -124,7 +124,7 @@ return ellipsize($string,  $length , $position);
  
   function dateformat($timestamp='',$format=''){
     $timestamp=empty($timestamp)? entrydate(): $timestamp;
-    $format=empty($format)? config('date-format') : $format;
+    $format=empty($format)? 'd/m/Y H:i:s': $format;
     return date($format,$timestamp);
     
   }

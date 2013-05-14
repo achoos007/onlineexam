@@ -132,9 +132,121 @@ function qupload(){
 }
 
 function assignsub(){
+   
 
-pa($_POST);
+$questions=explode(',',$this->input->post('selected_questions'));
+
+
+
+
+$total=$this->input->post('subtotal');
+
+		foreach(range(1,$total) as $q){
+	  
+			$sub=$this->input->post('subject_id_'.$q); 
+
+					if($sub > 0){
+					if(!empty($questions))
+							foreach($questions as $qs){
+								if($qs<1)
+								continue;
+
+
+
+							$qb['table']='q_subject';
+							$qb['where']['qBankid']=$qs;
+							$qb['where']['subjectid']=$sub;
+							$exist=getsingle($qb);
+									if(empty($exist)){
+
+									$ins['table']=$qb['table'];
+									$ins['data']['qBankid']=$qs;
+									$ins['data']['subjectid']=$sub;
+									$ins['data']['entrydate']=entrydate();
+									insert($ins);
+									
+									
+									
+									
+									$op['table']='qBank';
+									$op['where']['qBankid']=$qs;
+									$op['data']['status']='assigned';
+									update($op);
+									
+									
+									
+									
+									
+									
+									
+									
+									
+									
+
+									}
+
+
+							}
+					} 
+		
+		
+		
+		
+		
+		
+		
+		}
+	
+	
+	
+	
+	
+	
+	print " Data Updated: ".dateformat();
+	
+	 
+
+
+
+
+
+
+
+
+
 }
+
+
+function deletequestions(){
+		$questions=explode(',',$this->input->post('selected_questions_delete'));
+		$delete['table']='qBank';
+		$delete['wherein']['qBankid']=$questions;
+		delete($delete);  
+		
+		$msg='';
+		foreach($questions as $q){
+			
+			
+			$msg.=($msg=='')?"#quest".$q : ",#quest".$q;
+			
+			
+			
+		}
+		
+		print "Questions deleted
+		
+		".script()."
+		$(document).ready(function(){
+			$('".$msg."').hide('slow');
+			$('#deleteQuestions' ).popup( 'close' );
+			});
+		
+		</script>
+		"; 
+}
+
+
+
 
 function upload(){
 
