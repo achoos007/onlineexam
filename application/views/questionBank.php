@@ -46,3 +46,12 @@ $('#questionlist').listview('refresh');
 print ready($script);
 
 ?>
+<div data-role="popup" id="popupMenu" data-theme="a" data-mini='true'>
+	<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+				<ul data-role="listview" data-inset="true" style="min-width:210px;" data-theme="b" data-mini='true'>
+					<li><a href="<?php print site_url('question/form/0');?>" data-rel='dialog' data-mini='true'>Add questions</a></li>
+					<li><a href="<?php print site_url('question/upload');?>" data-rel='dialog' data-mini='true'>File Upload</a></li> 
+					<li><a href="<?php print site_url('question');?>"  data-mini='true'>Open Questions</a></li> 
+				</ul>
+		</div>
+ 

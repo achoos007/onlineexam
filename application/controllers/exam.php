@@ -9,7 +9,6 @@ parent::__construct();
 
 $this->menu = "exam";
 }
-
 public function index() {
 
 $this->load->view("theme/header", $data);
@@ -18,14 +17,15 @@ $this->load->view("theme/footer", $data);
 }
 
 function designer() {
-
+$roleid=$this->session->userdata('roleid');
 $this->title = "Designer";
-
+if($roleid==1){
 $data['main']['open_question_list']['right']['text'] = "Create Question Papers";
 $data['main']['open_question_list']['right']['url'] = site_url("exam/form");
-$data['main']['open_question_list']['title'] = "Question Designer";
-$data['main']['open_question_list']['page'] = $this->load->view("paper_designer_list", $data, TRUE);
+}
 
+$data['main']['open_question_list']['title'] = "Previous Question Papers";	
+$data['main']['open_question_list']['page'] = $this->load->view("paper_designer_list", $data, TRUE);	
 
 $this->load->view("theme/header", $data);
 $this->load->view("theme/index", $data);
@@ -49,6 +49,7 @@ $this->load->view("theme/footer", $data);
 function form($qid = 0) {
 
 $data['subjectid'] = intval($qid);
+//print"Tetsdata".$data['subjectid'];
 if (intval($data['subjectid']) > 0)
 $data['bttnText'] = 'Edit';
 else
@@ -57,8 +58,9 @@ $this->menu = "exam";
 $this->title = "Designer";
 $data['main']['open_question_list']['right']['text'] = "Previous Question Papers";
 $data['main']['open_question_list']['right']['url'] = site_url("exam/designer");
-$data['main']['open_question_list']['title'] = "Previous Question Papers";
+$data['main']['open_question_list']['title'] = "Question Designer";
 $data['main']['open_question_list']['page'] = $this->load->view("paper_designer", $data, TRUE);
+
 
 $this->load->view("theme/header", $data);
 $this->load->view("theme/index", $data);
@@ -68,15 +70,37 @@ $this->load->view("theme/footer", $data);
 function edit() {
 $data['menu'] = 'exam';
 //print_r($_POST);
-$this->form_validation->set_rules('title', 'Title', 'required|alpha');
-$this->form_validation->set_rules('mark', 'Minimum Mark', 'required|integer|max_length[3]');
+$this->form_validation->set_rules('title', 'Title', 'required|alpha_numeric');
+$this->form_validation->set_rules('mark', 'Minimum Mark', 'required|integer|max_length[3]|greater_than[0]');
 $this->form_validation->set_rules('duration', 'Duration', 'required|integer');
 $this->form_validation->set_rules('alerttime', 'Alert time', 'required|integer');
+$this->form_validation->set_rules('mm_0_count','Multiple answer easy type','integer');
+$this->form_validation->set_rules('mm_1_count','Multiple answer moderate type','integer');
+$this->form_validation->set_rules('mm_2_count','Multiple answer tough type','integer');
+$this->form_validation->set_rules('mm_3_count','Multiple answer mandatory type','integer');
+$this->form_validation->set_rules('ms_0_count','Single answer easy type','integer');
+$this->form_validation->set_rules('ms_1_count','Single answer moderate type','integer');
+$this->form_validation->set_rules('ms_2_count','Single answer tough type','integer');
+$this->form_validation->set_rules('ms_3_count','Single answer mandatory type','integer');
+$this->form_validation->set_rules('yn_0_count','Yes/No easy type','integer');
+$this->form_validation->set_rules('yn_1_count','Yes/No moderate type','integer');
+$this->form_validation->set_rules('yn_2_count','Yes/No tough type','integer');
+$this->form_validation->set_rules('yn_3_count','Yes/No mandatory type','integer');
+$this->form_validation->set_rules('st_0_count','Short text easy type','integer');
+$this->form_validation->set_rules('st_1_count','Short text moderate type','integer');
+$this->form_validation->set_rules('st_2_count','Short text tough type','integer');
+$this->form_validation->set_rules('st_3_count','Short text mandatory type','integer');
+$this->form_validation->set_rules('fu_0_count','File upload easy type','integer');
+$this->form_validation->set_rules('fu_1_count','File upload moderate type','integer');
+$this->form_validation->set_rules('fu_2_count','File upload tough type','integer');
+$this->form_validation->set_rules('fu_3_count','File upload mandatory type','integer');
 
 if ($this->form_validation->run() == FALSE) {
 echo validation_errors();
 } else {
-$data['qid'] = intval($this->input->post('qdesignerid'));
+	
+	//pa($_POST);
+$data['qid'] = intval($this->input->post('qdesignerid',TRUE));
 $update['table'] = 'qdesigner';
 $update['data']['title'] = $this->input->post('title');
 $update['data']['minMark'] = $this->input->post('mark');
@@ -89,27 +113,32 @@ $update['data']['timer'] = $this->input->post('timer');
 $update['data']['productid'] = $this->input->post('productid');
 $update['data']['moduleid'] = $this->input->post('moduleid');
 $update['data']['subjectid'] = $this->input->post('subjectid');
+$update['data']['mocktest']	=	$this->input->post('mocktest');
 $update['data']['markType'] = $this->input->post('radio-choice-2');
-$update['data']['msEasy'] = $this->input->post('multiple-easy');
-$update['data']['msModerate'] = $this->input->post('multiple-moderate');
-$update['data']['msTough'] = $this->input->post('multiple-tough');
-$update['data']['msMandatory'] = $this->input->post('multiple-mandatory');
-$update['data']['mmEasy'] = $this->input->post('multiple-easy-m');
-$update['data']['mmModerate'] = $this->input->post('multiple-moderate-m');
-$update['data']['mmTough'] = $this->input->post('multiple-tough-m');
-$update['data']['mmMandatory'] = $this->input->post('multiple-mandatory-m');
-$update['data']['tfEasy'] = $this->input->post('multiple-easy-t');
-$update['data']['tfModerate'] = $this->input->post('multiple-moderate-t');
-$update['data']['tfTough'] = $this->input->post('multiple-tough-t');
-$update['data']['tfMandatory'] = $this->input->post('multiple-mandatory-t');
-$update['data']['desEasy'] = $this->input->post('multiple-easy-d');
-$update['data']['desModerate'] = $this->input->post('multiple-moderate-d');
-$update['data']['desTough'] = $this->input->post('multiple-tough-d');
-$update['data']['desMandatory'] = $this->input->post('multiple-mandatory-d');
-$update['data']['fileEasy'] = $this->input->post('multiple-easy-f');
-$update['data']['fileModerate'] = $this->input->post('multiple-moderate-f');
-$update['data']['fileTough'] = $this->input->post('multiple-tough-f');
-$update['data']['fileMandatory'] = $this->input->post('multiple-mandatory-f');
+$update['data']['mmEasy'] = $this->input->post('mm_0_count');
+$update['data']['mmModerate'] = $this->input->post('mm_1_count');
+$update['data']['mmTough'] = $this->input->post('mm_2_count');
+$update['data']['mmMandatory'] = $this->input->post('mm_3_count');
+$update['data']['msEasy'] = $this->input->post('ms_0_count');
+$update['data']['msModerate'] = $this->input->post('ms_1_count');
+$update['data']['msTough'] = $this->input->post('ms_2_count');
+$update['data']['msMandatory'] = $this->input->post('ms_3 _count');
+$update['data']['tfEasy'] = $this->input->post('yn_0_count');
+$update['data']['tfModerate'] = $this->input->post('yn_1_count');
+$update['data']['tfTough'] = $this->input->post('yn_2_count');
+$update['data']['tfMandatory'] = $this->input->post('yn_3_count');
+$update['data']['desEasy'] = $this->input->post('st_0_count');
+$update['data']['desModerate'] = $this->input->post('st_1_count');
+$update['data']['desTough'] = $this->input->post('st_2_count');
+$update['data']['desMandatory'] = $this->input->post('st_0_count');
+$update['data']['fileEasy'] = $this->input->post('fu_0_count');
+$update['data']['fileModerate'] = $this->input->post('fu_1_count');
+$update['data']['fileTough'] = $this->input->post('fu_2_count');
+$update['data']['fileMandatory'] = $this->input->post('fu_3_count');
+$update['data']['status'] = $this->input->post('status');
+
+
+
 
 if ($data['qid'] > 0) {
 $update['where']['qDesignerId'] = $this->input->post('qdesignerid');
@@ -121,7 +150,7 @@ print"Error Occured";
 }
 else {
 insert($update);
-print "Data Inserted Successfully";
+print "Data Inserted Successfully".ready('setTimeout("refreshPage()",1000);');
 }
 }
 }
@@ -173,14 +202,14 @@ $this->load->view("examAssign",$data);
 $this->load->view("theme/footer",$data);
 }
 
-function assigneelist($uid=0,$qid=0){       
+function assigneelist($uid=0,$qid=0,$assignid=0){       
         //print_r($_POST);
          $this->menu = "exam";
         $this->title = "Designer";
         $data['title']=" List View ";  
         $data['uid']=intval($uid);
         $data['qid'] = intval($qid);
-        $data['$assignid'] = intval($assignid);
+        $data['assignid'] = intval($assignid);
         $data['assigneeid']=intval($this->input->post('assigneeid'));
         $data['main']['open_question_list']['right']['text'] = "Previous Question Papers";
         $data['main']['open_question_list']['right']['url'] = site_url("exam/designer");
@@ -193,32 +222,230 @@ function assigneelist($uid=0,$qid=0){
         
         
     }
+    function mockuptest(){
+			
+			$this->load->helper('array');
+			
+			$mockval = $this->input->post('clkid');
+						
+			$b = enum('qBank', 'questiontype');
+						
+			$bb = array(
+						'mm'=>'multiple choice multiple answer',
+						'ms'=>'multiple choice single answer',
+						'yon'=>'yes / no'
+			);
+	?>
+	<table width="100%" style="margin-top:20px;float:left; border: 1px solid #4e89c5;">
+    <th width="20%"></th>
+    <th>Available</th>
+    <th>Easy</th>
+    <th>Moderate</th>
+    <th>Tough</th>
+    <th>Mandatory</th>
+	<?php
+			
+			
+			$type[1]='mm';
+			$type[]='ms';
+			$type[]='st';
+			$type[]='fu';
+			$type[]='yn';
+              
+			$c=0;
+			
+			if($mockval=='on')
+			$b=$bb;
+			else
+			$b=$b;
+			
+			foreach ($b as $e) { 
+				$c++;
+							
+							
 
-   function user_selection(){
+        print"<tr ackoosdata-role='listview'>
+
+            <td nowrap='nowrap'>
+                <div data-role='fieldcontain' style='width:80px;'>
+                    <fieldset data-role='controlgroup'>
+                        <label>";
+                            print ucfirst(strtolower($e));
+                        print"</label>
+                    </fieldset>
+                </div>
+            </td>";
+            
+
+						if($mockval=='on'){
+							
+							$qrty['table'] = 'qBank';
+							$qrty['where']['questiontype'] = $e;
+							$qrty['where']['questionfor'] ='only for mock test';
+							$qrty['limit'] = 10000000;
+							$qrty = getrecords($qrty);
+							
+
+							$qe['table'] = 'qBank';
+							$qe['where']['questiontype'] = $e;
+							$qe['where']['questionfor'] ='only for mock test';
+							$qe['where']['level'] = 'easy';
+							$qe['limit'] = 10000000;
+							$qe = getrecords($qe);
+
+							$qm['table'] = 'qBank';
+							$qm['where']['questiontype'] = $e;
+							$qm['where']['questionfor'] ='only for mock test';
+							$qm['where']['level'] = 'moderate';
+							$qm['limit'] = 10000000;
+							$qm = getrecords($qm);
+
+							$qt['table'] = 'qBank';
+							$qt['where']['questiontype'] = $e;
+							$qt['where']['questionfor'] ='only for mock test';
+							$qt['where']['level'] = 'tough';
+							$qt['limit'] = 10000000;
+							$qt = getrecords($qt);
+
+							$qma['table'] = 'qBank';
+							$qma['where']['questiontype'] = $e;
+							$qma['where']['questionfor'] ='only for mock test';
+							$qma['where']['level'] = 'mandatory';
+							$qma['limit'] = 10000000;
+							$qma = getrecords($qma);
+						
+						}
+						else
+						{
+							$qrty['table'] = 'qBank';
+							$qrty['where']['questiontype'] = $e;
+							$qrty['limit'] = 10000000;
+							$qrty = getrecords($qrty);
+
+							$qe['table'] = 'qBank';
+							$qe['where']['questiontype'] = $e;
+							$qe['where']['level'] = 'easy';
+							$qe['limit'] = 10000000;
+							$qe = getrecords($qe);
+
+							$qm['table'] = 'qBank';
+							$qm['where']['questiontype'] = $e;
+							$qm['where']['level'] = 'moderate';
+							$qm['limit'] = 10000000;
+							$qm = getrecords($qm);
+
+							$qt['table'] = 'qBank';
+							$qt['where']['questiontype'] = $e;
+							$qt['where']['level'] = 'tough';
+							$qt['limit'] = 10000000;
+							$qt = getrecords($qt);
+
+							$qma['table'] = 'qBank';
+							$qma['where']['questiontype'] = $e;
+							$qma['where']['level'] = 'mandatory';
+							$qma['limit'] = 10000000;
+							$qma = getrecords($qma);
+						}
+            print"<td align='center'>" . count($qrty['result']) . "</td>";
+            
+            
+
+
+            for ($i = 0; $i < 4; $i++) {
+							
+							if(!empty($data['readonly']))
+							unset($data['readonly']);
+							
+                $data['id'] = $data['name'] = $type[$c]."_".$i."_count";
+                
+                $data['value'] = '';
+                if ($i == 0){
+                    
+                    $data['placeholder'] = count($qe['result']);
+                    
+                    
+                    
+                    if(count($qe['result'])<1)
+										$data['readonly']=	"readonly";
+                    
+									}
+                if ($i == 1){
+                    
+                    
+                    $data['placeholder'] = count($qm['result']);
+                    if(count($qm['result'])<1)
+										$data['readonly']=	"readonly";
+									}
+                if ($i == 2){
+									
+									
+                    $data['placeholder'] = count($qt['result']);
+                    if(count($qt['result'])<1)
+										$data['readonly']=	"readonly";
+                    
+                    
+									}
+                if ($i == 3){
+									
+									
+									
+                    $data['placeholder'] = count($qma['result']);
+                    if(count($qma['result'])<1)
+										$data['readonly']=	"readonly";
+                    
+                    
+                    
+									}
+                $data['data-mini'] = 'true';
+                $data['style'] = 'width:50%;';
+                print '<td align="center">
+                     ' . form_input($data) . ' 
+					 
+                    </td>  
+                    ';
+            }
+        }
+			?>
+			</table>
+			<?php
+			
+		}
+
+   function user_selection($uid=0,$userid=0,$qid=0,$entrydate=0){
         
+        $uid=intval($this->input->post('uid'));
         $userid=intval($this->input->post('clkid'));
         $qid=intval($this->input->post('qid'));
-        
+        $entrydate=intval($this->input->post('entrydate'));
          // for getting Question Designer name and User Name
         
         $details['table']='qdesigner';
         $details['where']['qDesignerId']=$qid;
         $details=  getsingle($details);
-        $title=$details['title'];
+        //$title=$details['title'];
               
-        $user_det['table']='tbl_staffs';
-        $user_det['where']['staff_id']=$userid;
-        $user_det=  getsingle($user_det);
-        $firstname=ucfirst(strtolower($user_det['first_name']));
-        $lastname=  ucfirst(strtolower($user_det['last_name']));
-        $username=$firstname."&nbsp".$lastname;
+        if($uid==1){
+					$user_det['table']='tbl_staffs';
+					$user_det['where']['staff_id']=$userid;
+				}
+				else{
+					$user_det['table']='candidate';
+					$user_det['where']['candidate_id']=$userid;
+					
+				}
+				
+					$user_det=  getsingle($user_det);
+					$firstname=ucfirst(strtolower($user_det['first_name']));
+					$lastname=  ucfirst(strtolower($user_det['last_name']));
+					$username=$firstname."&nbsp".$lastname;
+					
+					
+					$count='0';
+					$assign['table']='assigned_users';
+					$assign['where']['user_id']=$userid;
+					$assign['where']['qid']=$qid;
+					$count=  total_rows($assign);
         
-        $assign['table']='assigned_users';
-        $assign['where']['user_id']=$userid;
-        $assign['where']['qid']=$qid;
-        $count=  total_rows($assign);
-        
-       
         
         $update['table']='assigned_users';
         if($count>0)
@@ -226,24 +453,37 @@ function assigneelist($uid=0,$qid=0){
         $assign=  getsingle($assign);
         $status=$assign['assign_status'];
         
-        
             if($status=='Active'){
                 $update['where']['user_id']=$userid;
                 $update['where']['qid']=$qid;
                 $update['data']['assign_status']='Inactive';
-                update($update);
+                $update['data']['entrydate']=$entrydate;
+                $result = update($update);
                 //print "<b>".$username ."</b>&nbsp; has been removed from <b>".$title."</b> exam";
+                if($result){
                 $flg=0;
                 print $flg;
+								}
+								else{
+									$flg=3;
+                print $flg;
+								}
             }
             else{
                 $update['where']['user_id']=$userid;
                 $update['where']['qid']=$qid;
                 $update['data']['assign_status']='Active';
-                update($update);
+                $update['data']['entrydate']=$entrydate;
+                $result = update($update);
                 //print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
+                 if($result){
                 $flg=1;
                 print $flg;
+								}
+								else{
+									$flg=3;
+                print $flg;
+								}
             }
         }
         
@@ -251,30 +491,78 @@ function assigneelist($uid=0,$qid=0){
             $update['data']['user_id']=$userid;
             $update['data']['qid']=$qid;
             $update['data']['assign_status']='Active';
-            insert($update);
+            $update['data']['entrydate']=$entrydate;
+            $result = insert($update);
             //print "<b>".$username."</b>&nbsp; has been sucessfully added to <b>".$title."</b> exam";
-            $flg=1;
-            print $flg;
+             if($result){
+                $flg=1;
+                print $flg;
+								}
+								else{
+									$flg=3;
+                print $flg;
+								}
         }
+        
+       /* $this->load->library('email');
+
+$this->email->from('biju.iitm@gmail.com', 'Biju');
+$this->email->to('biju@geniusadvt.com');
+
+$this->email->subject('Email Test');
+$this->email->message('sample.');
+
+$this->email->send();
+
+echo $this->email->print_debugger();*/
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
+    function test($userid=0,$qid=0){
+			
+			$testid=$this->input->post('chkvalue');
+			
+		
+		
+      $qid=intval($this->input->post('qid'));
+			
+			//print "Values".$testid.", ".$userid.", ".$qid;
+			$returndata=array();
+			
+			$strArray=explode("&",$testid);
+			$i=0;
+			foreach($strArray as $item){
+				$array = explode("=", $item);
+        //$returndata[$i] = $array[0];
+        //$i = $i + 1;
+        $returndata[$i] = $array[1];
+					$i = $i + 1;
+			}
+			$count=count($returndata);
+			
+			//print $count;
+			
+			for($i=0;$i<$count;$i++){
+				//print $returndata[$i];
+				//$update['where']['user_id']=$returndata;
+				//printqq($update);
+			}
+			$userids=serialize($returndata);
+			print "Test".$userids;
+			
+			$update['table']='assigned_users';
+			$update['data']['user_id']=$userids;
+      $update['data']['qid']=$qid;
+      $update['data']['assign_status']='Active';
+      printqq($update);
+      //insert($update);
+			//$str1=unserialize($str);
+			//print_r($str1);
+			//print_r($returndata);
+			//parse_str($_POST['chkvalue'], $searcharray);
+			//print_r($searcharray); 
+			
+			
+		}
 
 
 
@@ -294,6 +582,7 @@ $ques['where']['qdesignerid']=$data['examid'];
 
 
 $ques=getsingle($ques); 
+$data['ques']=$ques;
 if(!empty($ques)){
 // pa($ques);
 // [qDesignerId] => 4
@@ -471,7 +760,16 @@ $data['main'][$q]['footermenu'] = '
 $data['main'][$q]['page'] = $this->load->view("questions", $data, TRUE);
 
 
-}
+}$data['title']="Upload Questions";
+
+$data['qid']=intval($qid);
+
+$this->load->view("theme/header",$data);
+
+$this->load->view("editQuestions",$data);
+
+$this->load->view("theme/footer",$data);
+
 }
 
 
@@ -498,6 +796,135 @@ $this->load->view("theme/footer", $data);
 }
 
 
+function qvalue(){
+	$qvalueid=intval($this->input->post('clkid'));
+	echo $qvalueid;
+}
+
+// For getting values from new candidate registration page
+
+function newcandidate($cid=0){
+	
+	$cid=intval($this->input->post('cid'));
+	
+	$this->form_validation->set_rules('user', 'Username', 'required|min_length[6]|callback_username_check');
+	//$this->form_validation->set_rules('user', 'User name', 'required');
+	$this->form_validation->set_rules('pass','Password','required|min_length[6]');
+	$this->form_validation->set_rules('firstname','First name','required|alpha');
+	$this->form_validation->set_rules('lastname','Last name','required|alpha');
+	$this->form_validation->set_rules('email','Email id','required|valid_email|callback_email_check');
+		if ($this->form_validation->run() == FALSE)
+			{
+				echo validation_errors(); 
+			} 
+			else{
+				
+
+
+	$entrydate=entrydate();
+	//print"EntryDate".dateformat($entrydate);
+	
+	$update['table']='candidate';
+	$update['data']['first_name']=$this->input->post('firstname');
+	$update['data']['last_name']=$this->input->post('lastname');
+	$update['data']['username']=$this->input->post('user');
+	$update['data']['password']=$this->input->post('pass');
+	$update['data']['email']=$this->input->post('email');
+	$update['data']['entrydate']=$entrydate;
+	$update['data']['country_code']=$this->input->post('country_code');
+	$update['data']['status']='Active';
+	
+	if($cid > 0){
+		$update['where']['candidate_id']=$cid;
+		if(update($update)){
+			print "Data updated successfully";
+		}
+		else
+		print "Error Occured!!!";
+	}
+	else{
+		insert($update);
+		print "Data inserted successfully";
+	}
+		
+}
+}
+
+function username_check($str){
+	
+	$candidate['table']='candidate';
+	$candidate['where']['username']=$str;
+	$candidate=getsingle($candidate);
+
+	if(!empty($candidate))
+	{
+	$username=$candidate['username'];
+	if($str==$username){
+		$this->form_validation->set_message('username_check', $username.' is already exist');
+			return FALSE;
+		}
+		else
+		{	
+			$this->form_validation->set_message('username_check',$str.' is available ');
+			return TRUE;
+		}
+	
+	}
+}
+
+
+function email_check($str){
+	
+	$candidate['table']='candidate';
+	$candidate['where']['email']=$str;
+	$candidate=getsingle($candidate);
+	
+	if(!empty($candidate))
+	{
+	$email=$candidate['email'];
+
+	if($str==$email){
+		$this->form_validation->set_message('email_check', $email.' is already exist');
+			return FALSE;
+		}
+		else
+		{	
+			$this->form_validation->set_message('email_check',$str.' is available ');
+			return TRUE;
+		}
+	
+	}
+}
+
+function editcandidate($cid){
+	
+
+	$data['cid']=intval($cid);
+
+$this->load->view("theme/header",$data);
+
+$this->load->view("editCandidate",$data);
+
+$this->load->view("theme/footer",$data);
+
+}
+
+function testfunction(){
+	$data['uid'] = "Hi, This is a test value";
+	$this->load->view("theme/header",$data);
+
+	$this->load->view("testpage",$data);
+
+	$this->load->view("theme/footer",$data);
+	
+	$country['table'] = 'country';
+	$country = getrecords($country);
+	printqq($country);
+	
+	//$cand['table'] = 'candidate';
+	//$cand['join'][''];
+	
+}
 
 }
 

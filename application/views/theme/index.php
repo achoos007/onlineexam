@@ -17,7 +17,7 @@ if(!empty($main)){
 	 
 	 
 	 
-			print "<div data-role='page' id='".$key."'  data-title='".$value['title']." - Leads Management Solution'>";
+			print "<div data-role='page' id='".$key."'  data-title='".$value['title']." - Examination module : Genius Group Global'>";
 			print $data['headermenu'];
 			print "<div data-role='header' data-theme='b'  data-mini='true'> ";
 			if(!empty($value['back']))

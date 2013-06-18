@@ -76,7 +76,8 @@ print hidden('qBankid',intval($qid));
 							?></textarea>
 							</li>
 
-
+							
+							<div class="shortresult">
 							<li data-role="fieldcontain">
 							<fieldset data-role="controlgroup" data-mini="true"> 
 							<legend>Option A</legend> 
@@ -112,8 +113,10 @@ print hidden('qBankid',intval($qid));
 
 
 							<li data-role="fieldcontain">
+								
 							<fieldset data-role="controlgroup" data-mini="true"> 
 							<legend>Answer</legend> 
+							<div class="singleresult">
 							<?php
 							$op=array(1=>'A','B','C','D');  
 							foreach($op as $i=>$an){ 
@@ -127,9 +130,11 @@ print hidden('qBankid',intval($qid));
 							print "				/> 			<label for='answer_".$an."'>".$an."</label>"; 
 							} 
 							?>  
+							</div>
 							</fieldset> 
+							
 							</li>
-
+							</div>
 
 
 
@@ -231,6 +236,42 @@ print hidden('qBankid',intval($qid));
 
 print  submit('Save');
 print  close();
+
+$script="
+
+$('#questType').change(function(){
+	var val = this.value;
+	
+	flag=0;
+	if(val == 'multiple choice single answer'){
+	//alert(val);
+	$.post('".site_url('question/singleanswer')."',{flag:1},function(data){
+		//alert(data);
+		$('.singleresult').html(data); 
+	}); 
+	}
+	else if(val == 'multiple choice multiple answer'){
+		$.post('".site_url('question/singleanswer')."',{flag:0},function(data){
+		//alert(data);
+		$('.singleresult').html(data); 
+	}); 
+	}
+	else if(val == 'yes / no'){
+		$.post('".site_url('question/singleanswer')."',{flag:2},function(data){
+		//alert(data);
+		$('.shortresult').html(data); 
+	}); 
+		
+	}
+	
+	});
+	
+";
+	
+print ready($script);
+
+
+
 ?>
 </div>
 

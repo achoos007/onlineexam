@@ -774,6 +774,15 @@ $this->menu="Question Bank";
 
 $this->title="Question Bank";
 
+
+
+$data['main']['open_question_list']['right']['text']=	"Options";  
+
+$data['main']['open_question_list']['right']['url']=	"#popupMenu"; 
+
+$data['main']['open_question_list']['right']['option']=	" data-rel='popup'  data-inline='true' data-position-to='orgin' "; 
+
+
 $data['main']['open_question_list']['title']=	"Question Bank";  
 
 $data['main']['open_question_list']['page']=		$this->load->view("questionBank",$data,TRUE); 
@@ -882,7 +891,7 @@ $this->load->helper('text');
 
 			foreach($op['result'] as $o){  
 
-
+			
 
 				$list .= "
 
@@ -891,23 +900,25 @@ $this->load->helper('text');
 
 
 
-	<li  id='ques_".$o['qBankid']."'>
-					<a href='#'  style='padding-top: 0px;padding-bottom: 0px;padding-right: 42px;padding-left: 0px;'   >
-									<label style='border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;' data-corners='false'>
-											<fieldset data-role='controlgroup' >                                                        
-													<input type='checkbox' name='checkbox-2b' id='checkbox-2b' />                   
-													<label for='checkbox-2b' style='border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;'>
-															<img src='".base_url('images/question.jpg')."' style='float:left;width:80px;height:80px'/>
-															<label  style='float:left;padding:10px 0px 0px 10px;'> 
-																	<h3>".format($o['question'])."</h3>
-																	<p>".$o['questiontype']."</p>
-															</label> 
-													</label>
-											</fieldset> 
-									</label>
-									</a>
-							<a href='".site_url('question/form/'.$o['qBankid'])."'  data-icon='info'  href='".site_url('question/form/'.$o['qBankid'])."' data-rel='dialog' >Delete</a>
-			 </li>
+<li  id='quest".$o['qBankid']."' >
+<a href='#'  style='padding-top: 0px;padding-bottom: 0px;padding-right: 42px;padding-left: 0px;'  >
+	<label style='border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;' data-corners='false'>
+		<fieldset data-role='controlgroup'>                                                        
+				<input type='checkbox' name='checkbox-2b' id='checkbox_".$o['qBankid']."'  class='openquestions' value='".$o['qBankid']."'  />                   
+						<label for='checkbox_".$o['qBankid']."' style='border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;'>
+						<img src='".base_url('images/question.jpg')."' style='float:left;width:80px;height:80px' />
+						<label  style='float:left;padding:2px;'> 
+								<h3>".truncate($o['question'],80)."</h3> 
+								<p>".$o['questiontype']."</p>
+						</label> 
+				</label>
+		</fieldset> 
+	</label>
+</a>
+<a href='".site_url('question/form/'.$o['qBankid'])."'  data-icon='info'  data-rel='dialog' >
+	Edit
+</a>
+</li>
 
 ";
 
@@ -973,7 +984,84 @@ $this->load->helper('text');
 
 	
 
+function singleanswer(){
+	$singleval=$this->input->post('flag');
+
+//print"Hello, I am radio button from single answer page";
+if($singleval==1){
+$op=array(1=>'A','B','C','D');  
+							foreach($op as $i=>$an){ 
+								
+							print "	<input type='radio' name='answer' id='answer_".$an."' value='".$i."' ";
+							 
+							 /*if($i == $answer)
+							 print " checked='checked' ";*/
+							 
+							 
+							print "				/> 			<label for='answer_".$an."'>".$an."</label>"; 
+						}
+					}
+					else if($singleval==0){
+						$op=array(1=>'A','B','C','D');  
+							foreach($op as $i=>$an){ 
+								
+							print "	<input type='checkbox' name='answer' id='answer_".$an."' value='".$i."' ";
+							 
+							 
+							 
+							print "				/> 			<label for='answer_".$an."'>".$an."</label>"; 
+							} 
+					}
+						else if($singleval==2){
+							?>
+						<li data-role="fieldcontain">
+							<fieldset data-role="controlgroup" data-mini="true"> 
+							<legend>Option A</legend> 
+							<input type='text' id='opt1' name='opt1' value='' />
+							</fieldset> 
+							</li>
+
+							<li data-role="fieldcontain">
+							<fieldset data-role="controlgroup" data-mini="true"> 
+							<legend>Option B</legend> 
+							<input type='text' id='opt2' name='opt2'  value='' />
+							</fieldset> 
+							</li>
+
+						
+ 
+
+
+
+
+
+
+							<li data-role="fieldcontain">
+								
+							<fieldset data-role="controlgroup" data-mini="true"> 
+							<legend>Answer</legend> 
+							<div class="singleresult">
+							<?php
+							$op=array(1=>'A','B');  
+							foreach($op as $i=>$an){ 
+								
+							print "	<input type='radio' name='answer' id='answer_".$an."' value='".$i."' ";
+							 
+							 /*if($i == $answer)
+							 print " checked='checked' ";*/
+							 
+							 
+							print "				/> 			<label for='answer_".$an."'>".$an."</label>"; 
+							} 
+							?>  
+							</div>
+							</fieldset> 
+							
+							</li>
+							<?php
+					}
 	
+}	
 
 	
 

@@ -29,11 +29,29 @@ ajaxform("subjectformedit",'editresult');
 <form method="post" action ="<?php print site_url("subjects/edit");?>" id="subjectformedit" >
 
 <div align="center">  
- 
+	 <?php 
+	 $name=empty($name)? '':$name;
+	 if($name == '' ){
+		 
+		 
+		 
+	 ?>
     <input type="text" name="name" id="name" value="<?php 
-    print empty($name)? '':$name;
+    print $name;
     
-    ?>"  placeholder="Subject Name"  />
+    ?>"  placeholder="Subject Name"/>
+    
+    
+    
+    
+   <?php }
+   else{
+		 ?> 
+    <input type="text" name="name" id="name" value="<?php 
+    print $name;
+    
+    ?>"  placeholder="Subject Name"  readonly='readonly'   />
+    <?php } ?>
  <br/>
  <br/>
   
@@ -55,9 +73,13 @@ print ($status==0)? " selected='selected' ":"";
 <input value="<?php print $subjectid;?>" type="hidden" id="subjectid" name="subjectid" /> 
 <input value="<?php print $btnText;?>" type="submit"  data-inline='true' data-mini='true'  data-theme='b'/>
 
-
+<?php
+if($btnText == 'Edit'){
+?>
 <div data-role="button"  data-inline='true' data-mini='true'  data-theme='b' id='deleteSub'>Delete</div>
-
+<?php
+}
+?>
 
  </div>
 </form> </div>

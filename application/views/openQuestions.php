@@ -9,15 +9,18 @@
 			$op =getrecords($op); 
 			if(!empty($op['result']))
 			foreach($op['result'] as $o){  
+/**
+			 	continue;
+*/
 				print "
 <li  id='quest".$o['qBankid']."' >
 <a href='#'  style='padding-top: 0px;padding-bottom: 0px;padding-right: 42px;padding-left: 0px;'  >
 	<label style='border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;' data-corners='false'>
 		<fieldset data-role='controlgroup'>                                                        
 				<input type='checkbox' class='openquestions' name='checkbox-2b' id='checkbox_".$o['qBankid']."' value='".$o['qBankid']."'/>                   
-						<label for='checkbox-2b' style='border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;'>
+						<label for='checkbox_".$o['qBankid']."' style='border-top-width: 0px;margin-top: 0px;border-bottom-width: 0px;margin-bottom: 0px;border-left-width: 0px;border-right-width: 0px;'>
 						<img src='".base_url('images/question.jpg')."' style='float:left;width:80px;height:80px'/>
-						<label  style='float:left;padding:10px 0px 0px 10px;'> 
+						<label  style='float:left;padding:2px;'> 
 								<h3>".truncate($o['question'],80)."</h3> 
 								<p>".$o['questiontype']."</p>
 						</label> 
@@ -245,27 +248,51 @@ $script="
 				$('#loadmoreopen').click(function (){	$.post('".site_url('question/loadmore/open')."',function(data){ 
 				$('#questionlistopen').append(data); 
 				$('#questionlistopen').listview('refresh');
+		 		$('input[type=\'checkbox\']').checkboxradio({ theme: 'c' });
 				});});
 				var quids=0;
 				var quCount=0;
 				var questionsArray=new Array();
-				$('.openquestions').click(function(){
+
+
+
+
+
+
+				$('input[type=\"checkbox\"]').bind( 'change', function(event, ui) {
+ 
+				
+ 
 				quids=quids+','+this.value;
 				quCount=$('#quesCount').html();
 				if ($(this).is(':checked')) {
 				quCount=(quCount*1)+1;
 				questionsArray.push(this.value);
-				} else {
+				}else{
 				quCount=(quCount*1)-1; 
 				var index = questionsArray.indexOf(this.value);
 				questionsArray.splice(index, 1);	
-				} 
+				}
 				$('#quesCount').html(quCount);
 				$('#selected_questions').val(questionsArray.toString());
 				$('#selected_questions_delete').val(questionsArray.toString());
-				// alert(questionsArray.toString());
+				alert(questionsArray.toString());
+
 				});
-				$('#setOption').click(function(){
+ 		
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				$('#setOption').click(function(){ 
 				$( '#popupAssign' ).popup( 'open' );
 				}); 
 ";
@@ -275,3 +302,8 @@ $script="
 print ready($script);
 
 ?>
+<script type='text/javascript'>
+
+
+				
+</script>

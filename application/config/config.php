@@ -14,6 +14,9 @@
 | path to your installation.
 |
 */
+/**
+$config['base_url']	= 'http://198.1.110.184/~geniuste/gg/onlineexam/';
+*/
 $config['base_url']	= 'http://localhost/Dropbox/genius/exam/trunk/';
 
 /*

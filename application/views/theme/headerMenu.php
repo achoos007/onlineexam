@@ -34,11 +34,23 @@
 
 <div data-role="navbar"  >
 <ul>
+<?php $roleid=$this->session->userdata('roleid');
+if($roleid==1){
+?>
 <li><a href="<?php echo site_url(); ?>"  data-ajax='false'  <?php 		print ($this->menu=="home")? ' class="ui-btn-active ui-state-persist" ':'';		?> >Home</a></li>
 <li><a href="<?php echo site_url("subjects/");?>" data-ajax='false'  <?php 		print ($this->menu=="subjects")? ' class="ui-btn-active ui-state-persist" ':'';		?> >Subjects</a></li>
 <li><a href="<?php echo site_url("question");?>" data-ajax='false'  <?php 		print ($this->menu=="question")? ' class="ui-btn-active ui-state-persist" ':'';		?> >Upload Questions</a></li>
 <li><a href="<?php echo site_url("exam/designer");?>" data-ajax='false'   <?php 		print ($this->menu=="exam")? ' class="ui-btn-active ui-state-persist" ':'';		?> >Exam</a></li>
 <li><a href="<?php echo site_url("manage/validate/");?>" data-ajax='false'  <?php 		print ($this->menu=="result")? ' class="ui-btn-active ui-state-persist" ':'';		?>  >Validate Exam</a></li>
+<?php
+}
+else{
+?>
+<li><a href="<?php echo site_url("exam/designer");?>" data-ajax='false'   <?php 		print ($this->menu=="exam")? ' class="ui-btn-active ui-state-persist" ':'';		?> >Home</a></li>
+<li><a href="<?php echo site_url("manage/validate/");?>" data-ajax='false'  <?php 		print ($this->menu=="result")? ' class="ui-btn-active ui-state-persist" ':'';		?>  >Validate Exam</a></li>	
+<?php
+}
+?>
 </ul>
 </div>
 

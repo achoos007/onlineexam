@@ -210,7 +210,9 @@ print empty($title) ? '' : $title;
     <tr><td align="center" colspan="6">
             <?php
 //print submit('Save');
+					$status='1';
             ?>
+            <input type="hidden" value='<?php print $status; ?>' name="status"/>
             <input type="hidden" value='<?php print $qdid; ?>' name="qdesignerid"/>
             <input value='<?php print $bttnText; ?>' type="submit"  data-inline='true' data-mini='true'  data-theme='b'/>
 

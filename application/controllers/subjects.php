@@ -71,14 +71,19 @@ function del($del){
 	
 }
 function edit(){
+	$flag=1;
 $data['menu']='subjects';
-$this->form_validation->set_rules('name', 'Subject Name', 'required');
+$data['subjectid']=intval($this->input->post('subjectid'));
+if( $data['subjectid'] == 0 ){
+$this->form_validation->set_rules('name', 'Subject Name', 'required|callback_subjectname');
 			if ($this->form_validation->run() == FALSE)
 				{
 						echo validation_errors(); 
+						$flag=0;
 				} 
-				else{
-						$data['subjectid']=intval($this->input->post('subjectid'));
+}
+				if($flag!=0){
+						
 						$update['table']='tbl_subject';
 						$update['data']['c_subject']=$this->input->post('name');
 						$update['data']['status']=$this->input->post('status');
@@ -97,6 +102,32 @@ $this->form_validation->set_rules('name', 'Subject Name', 'required');
 					print " Data Inserted Successfully : ".$this->input->post('name').ready('setTimeout("refreshPage()",1000);');
 				}
 			}
+}
+
+// for checking the duplication entry of subject
+
+public function subjectname($str){
+	
+	$subject['table']='tbl_subject';
+	$subject['where']['c_subject']=$str;
+	$subject=getsingle($subject);
+	
+	if(!empty($subject))
+	{
+	$subjectname=$subject['c_subject'];
+
+	if($str==$subjectname){
+		$this->form_validation->set_message('subjectname', $subjectname.' is already exist');
+			return FALSE;
+		}
+		else
+		{	
+			$this->form_validation->set_message('subjectname',$subjectname.' is available ');
+			return TRUE;
+		}
+	
+	}
+	
 }
 
 public function _output($output)

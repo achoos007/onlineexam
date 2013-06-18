@@ -110,18 +110,50 @@ Recent Exams
 
 
 
-<a href='<?php print site_url('exam/form');?>'>
-<a href='<?php print site_url('exam/execute');?>'>
+<!--<a href='<?php print site_url('exam/form');?>'>
+<a href='<?php print site_url('exam/execute');?>'>-->
+<a href="#popupLogin111" data-transition="pop" data-rel="popup" data-position-to="window" data-transition="pop">
 <div class='menu-box' align='center'>
 <div class='menu-image' align='center'>
-	<img src="<?php print base_url('images/exam.jpg');?>" border='0'width='115px' />
+	<img src="<?php print base_url('images/cands.jpg');?>" border='0'width='115px' />
 </div>
 <h3>
-Execute Exams
+Add Candidate
 </h3>
 </div>
 </a>
 
+<div data-role="popup" id="candpopupMenu" data-theme="b">
+    <div data-role="popup" id="popupLogin111" data-theme="b" class="ui-corner-all">
+			 <a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+        <form id="addcandidate" method="post" action="<?php print site_url("exam/newcandidate")  ?>">
+            <div style="padding:10px 20px;">
+              <div id="candidate_success" ><h3>Please sign in</h3></div>
+              <label for="un" class="ui-hidden-accessible">Username:</label>
+              <input name="user" id="un" value="" placeholder="username" data-theme="b" type="text">
+              <label for="pw" class="ui-hidden-accessible">Password:</label>
+              <input name="pass" id="pw" value="" placeholder="password" data-theme="b" type="password">
+              <label for="fn" class="ui-hidden-accessible">Firstname</label>
+              <input name="firstname" id="fn" value="" placeholder="firstname" data-theme="b" type="text">
+              <label for="ln" class="ui-hidden-accessible">Lastname</label>
+              <input name="lastname" id="fn" value="" placeholder="lastname" data-theme="b" type="text">
+              <label for="email" class="ui-hidden-accessible">Email</label>
+              <input name="email" id="email" value="" placeholder="email" data-theme="b" type="text">
+              <label for="select-native-14" class="ui-hidden-accessible">Select </label>
+								<select name="country_code" id="country_code" data-mini="true">
+									<option value="#">Select Country</option>
+									<option value="IND">India</option>
+									<option value="BHR">Bhaharin</option>
+								</select>
+								<br><br>
+              <button type="submit" data-theme="b" data-inline="true" >Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+<?php
+ajaxform("addcandidate",'candidate_success');
+?>
 
 
 <a href='<?php print site_url('exam/form');?>'>
